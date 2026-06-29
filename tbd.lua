@@ -1,5 +1,3 @@
--- orbx
-
 local WindUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/Footagesus/WindUI/main/dist/main.lua"))()
 
 local Players = game:GetService("Players")
@@ -442,13 +440,17 @@ collapsed = not collapsed
 
 arrowBtn.Text = collapsed and "›" or "‹"
 
-if not collapsed then
+if collapsed then
+pill.Visible = false
+tweening = false
+return
+else
 pill.Visible = true
-arrowBtn.Visible = true
+pill.Position = UDim2.new(1, PILL_HIDDEN_X_OFFSET, 0, yOffset)
 end
 
 local startX = pill.Position.X.Offset
-local targetX = collapsed and PILL_HIDDEN_X_OFFSET or PILL_X_OFFSET
+local targetX = PILL_X_OFFSET
 
 local elapsed = 0
 local duration = 0.22
@@ -461,10 +463,6 @@ pill.Position = UDim2.new(1, startX + (targetX - startX) * smooth, 0, yOffset)
 if alpha >= 1 then
 conn:Disconnect()
 tweening = false
-if collapsed then
-pill.Visible = false
-arrowBtn.Visible = false
-end
 end
 end)
 end)
